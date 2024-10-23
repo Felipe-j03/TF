@@ -7,5 +7,6 @@ import com.controle_assinaturas.TF.dominio.entidades.Aplicativo;
 public interface IAplicativoRepositorio {
 
     public List<Aplicativo> listarApps();
+    public Aplicativo consultaPorCod(long codigo);
 
 }
