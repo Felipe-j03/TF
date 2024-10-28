@@ -8,6 +8,7 @@ import com.controle_assinaturas.TF.dominio.entidades.Cliente;
 public interface IClienteRepositorio {
 
     public List<Cliente> listarClientes();
+    public List<Assinatura> listarAssinaturas();
     public Cliente procuraPorCod(long codigo);
     public void cadastrarAssinatura(Assinatura assinatura);
 
