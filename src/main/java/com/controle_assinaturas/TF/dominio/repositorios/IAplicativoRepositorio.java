@@ -10,5 +10,6 @@ public interface IAplicativoRepositorio {
     public List<Aplicativo> listarApps();
     public List<Assinatura> listarAssinantes();
     public Aplicativo consultaPorCod(long codigo);
+    public void salvar(Aplicativo aplicativo);
 
 }
