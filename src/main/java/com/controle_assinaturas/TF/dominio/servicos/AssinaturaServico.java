@@ -3,47 +3,45 @@ package com.controle_assinaturas.TF.dominio.servicos;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.cglib.core.Local;
-
-import com.controle_assinaturas.TF.dominio.entidades.Aplicativo;
-import com.controle_assinaturas.TF.dominio.entidades.Assinatura;
-import com.controle_assinaturas.TF.dominio.entidades.Cliente;
+import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
+import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
+import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IAssinaturaRepositorio;
 
 public class AssinaturaServico {
 
-    private IAssinaturaRepositorio assinaturaRepositorio;
+    private final IAssinaturaRepositorio assinaturaRepositorio;
 
     public AssinaturaServico(IAssinaturaRepositorio assinaturaRepositorio) {
         this.assinaturaRepositorio = assinaturaRepositorio;
     }
 
-    public List<Assinatura> listarAssinaturas() {
+    public List<AssinaturaModel> listarAssinaturas() {
         return assinaturaRepositorio.listarAssinaturas();
     }
 
-    public List<Assinatura> assinaturasValidas() {
+    public List<AssinaturaModel> assinaturasValidas() {
         return assinaturaRepositorio.listarAssinaturasValidas();
     }
 
-    public Assinatura consultarPorId(long id) {
+    public AssinaturaModel consultarPorId(long id) {
         return assinaturaRepositorio.consultaPorCod(id);
     }
 
-    public void cadastrarAssinatura(long id, Cliente cliente, Aplicativo aplicativo) {
-        Assinatura assinatura = new Assinatura(id, LocalDate.now(), LocalDate.now().plusDays(7), aplicativo, cliente);
+    public void cadastrarAssinatura(long id, ClienteModel cliente, AplicativoModel aplicativo) {
+        AssinaturaModel assinatura = new AssinaturaModel(id, LocalDate.now(), LocalDate.now().plusDays(7), aplicativo, cliente);
         assinaturaRepositorio.salvar(assinatura);
     }
 
-    public boolean isAssinaturaValida(Assinatura assinatura) {
+    public boolean isAssinaturaValida(AssinaturaModel assinatura) {
         return assinatura.getFimVigencia().isAfter(LocalDate.now());
     }
-    
-    public List<Assinatura> listarAssinaturasPorCliente(Cliente cliente){
+
+    public List<AssinaturaModel> listarAssinaturasPorCliente(ClienteModel cliente) {
         return assinaturaRepositorio.listarAssinaturaPorCliente(cliente);
     }
-    
-    public List<Assinatura> listarAssinantesPorAplicativo(Aplicativo aplicativo){
+
+    public List<AssinaturaModel> listarAssinantesPorAplicativo(AplicativoModel aplicativo) {
         return assinaturaRepositorio.listarAssinantesPorAplicativo(aplicativo);
     }
 

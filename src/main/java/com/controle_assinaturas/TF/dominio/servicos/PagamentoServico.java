@@ -3,8 +3,8 @@ package com.controle_assinaturas.TF.dominio.servicos;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.controle_assinaturas.TF.dominio.entidades.Assinatura;
-import com.controle_assinaturas.TF.dominio.entidades.Pagamento;
+import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
+import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IAssinaturaRepositorio;
 import com.controle_assinaturas.TF.dominio.repositorios.IPagamentoRepositorio;
 
@@ -18,8 +18,8 @@ public class PagamentoServico {
         this.pagamentoRepositorio = pagamentoRepositorio;
     }
 
-    public LocalDate registrarPagamento(Long assinaturaId, double valorPago, String promocao) {
-        Assinatura assinatura = assinaturaRepositorio.consultaPorCod(assinaturaId);
+    public LocalDate registrarPagamento(long assinaturaId, double valorPago, String promocao) {
+        AssinaturaModel assinatura = assinaturaRepositorio.consultaPorCod(assinaturaId);
         if(assinatura == null){
                 throw new IllegalArgumentException("Assinatura não encontrada.");
         }
@@ -46,7 +46,7 @@ public class PagamentoServico {
      * Verifica se o valor pago é correto com base no custo do aplicativo e na
      * promoção aplicada.
      */
-    private boolean isValorPagamentoCorreto(Assinatura assinatura, double valorPago, String promocao) {
+    private boolean isValorPagamentoCorreto(AssinaturaModel assinatura, double valorPago, String promocao) {
         double custoBase = assinatura.getAplicativo().getCustoMensal();
         if ("ANUAL_40_OFF".equals(promocao)) {
             return valorPago == (custoBase * 12 * 0.6);
@@ -58,7 +58,7 @@ public class PagamentoServico {
     /**
      * Calcula a nova data de validade da assinatura com base na promoção.
      */
-    private LocalDate calcularNovaValidade(Assinatura assinatura, String promocao) {
+    private LocalDate calcularNovaValidade(AssinaturaModel assinatura, String promocao) {
         LocalDate validadeAtual = assinatura.getFimVigencia();
         LocalDate dataAtual = LocalDate.now();
 
@@ -79,8 +79,8 @@ public class PagamentoServico {
     /**
      * Salva o pagamento no banco de dados para manter o histórico.
      */
-    private void salvarPagamento(Assinatura assinatura, double valorPago, String promocao) {
-        Pagamento pagamento = new Pagamento(0, valorPago, assinatura, LocalDate.now(), promocao);
+    private void salvarPagamento(AssinaturaModel assinatura, double valorPago, String promocao) {
+        PagamentoModel pagamento = new PagamentoModel(0, valorPago, assinatura, LocalDate.now(), promocao);
 
         pagamentoRepositorio.salvar(pagamento);
     }
@@ -91,7 +91,7 @@ public class PagamentoServico {
      * @param assinaturaId ID da assinatura para obter o histórico.
      * @return Lista de pagamentos feitos para a assinatura.
      */
-    public List<Pagamento> obterHistoricoPagamentos(Long assinaturaId) {
+    public List<PagamentoModel> obterHistoricoPagamentos(Long assinaturaId) {
         return pagamentoRepositorio.historicoPagamentoPorID(assinaturaId);
     }
 }

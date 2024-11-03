@@ -1,12 +1,12 @@
 package com.controle_assinaturas.TF.dominio.entidades;
 
-public class Aplicativo {
+public class AplicativoModel {
 
     private long codigo;
     private String nome;
     private double custoMensal;
 
-    public Aplicativo(long codigo, String nome, double custoMensal) {
+    public AplicativoModel(long codigo, String nome, double custoMensal) {
         this.codigo = codigo;
         this.nome = nome;
         this.custoMensal = custoMensal;

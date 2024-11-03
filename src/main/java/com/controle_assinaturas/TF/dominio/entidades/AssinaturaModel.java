@@ -2,15 +2,15 @@ package com.controle_assinaturas.TF.dominio.entidades;
 
 import java.time.LocalDate;
 
-public class Assinatura {
+public class AssinaturaModel {
 
     private long codigo;
     private LocalDate inicioVigencia;
     private LocalDate fimVigencia;
-    private Aplicativo aplicativo;
-    private Cliente cliente;
+    private AplicativoModel aplicativo;
+    private ClienteModel cliente;
 
-    public Assinatura(long codigo, LocalDate inicioVigencia, LocalDate fimVigencia, Aplicativo aplicativo, Cliente cliente) {
+    public AssinaturaModel(long codigo, LocalDate inicioVigencia, LocalDate fimVigencia, AplicativoModel aplicativo, ClienteModel cliente) {
         this.codigo = codigo;
         this.inicioVigencia = inicioVigencia;
         this.fimVigencia = fimVigencia;
@@ -30,11 +30,11 @@ public class Assinatura {
         return fimVigencia;
     }
 
-    public Aplicativo getAplicativo() {
+    public AplicativoModel getAplicativo() {
         return aplicativo;
     }
 
-    public Cliente getCliente() {
+    public ClienteModel getCliente() {
         return cliente;
     }
 
@@ -50,11 +50,11 @@ public class Assinatura {
         this.fimVigencia = fimVigencia;
     }
 
-    public void setAplicativo(Aplicativo aplicativo) {
+    public void setAplicativo(AplicativoModel aplicativo) {
         this.aplicativo = aplicativo;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(ClienteModel cliente) {
         this.cliente = cliente;
     }
     

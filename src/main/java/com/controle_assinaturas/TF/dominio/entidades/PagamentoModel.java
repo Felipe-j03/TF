@@ -2,15 +2,15 @@ package com.controle_assinaturas.TF.dominio.entidades;
 
 import java.time.LocalDate;
 
-public class Pagamento {
+public class PagamentoModel {
 
     private long codigo;
     private double valorPago;
-    private Assinatura assinatura;
+    private AssinaturaModel assinatura;
     private LocalDate dataPagamento;
     private String promocao;
 
-    public Pagamento(long codigo, double valorPago, Assinatura assinatura, LocalDate dataPagamento, String promocao) {
+    public PagamentoModel(long codigo, double valorPago, AssinaturaModel assinatura, LocalDate dataPagamento, String promocao) {
         this.codigo = codigo;
         this.valorPago = valorPago;
         this.assinatura = assinatura;
@@ -22,7 +22,7 @@ public class Pagamento {
         return codigo;
     }
 
-    public Assinatura getAssinatura() {
+    public AssinaturaModel getAssinatura() {
         return assinatura;
     }
 

@@ -2,7 +2,7 @@ package com.controle_assinaturas.TF.dominio.servicos;
 
 import java.util.List;
 
-import com.controle_assinaturas.TF.dominio.entidades.Aplicativo;
+import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IAplicativoRepositorio;
 
 public class AplicativoServico {
@@ -12,15 +12,15 @@ public class AplicativoServico {
         this.aplicativoRepositorio = aplicativoRepositorio;
     }
 
-    public void adicionarAplicativo(Aplicativo aplicativo) {
+    public void adicionarAplicativo(AplicativoModel aplicativo) {
         aplicativoRepositorio.salvar(aplicativo);
     }
 
-    public List<Aplicativo> listarAplicativos() {
+    public List<AplicativoModel> listarAplicativos() {
         return aplicativoRepositorio.listarApps();
     }
 
-    public void atualizarCustoApp(double novoCusto, Aplicativo aplicativo){
+    public void atualizarCustoApp(double novoCusto, AplicativoModel aplicativo){
         if(aplicativo == null){
             throw new IllegalArgumentException("Aplicativo não existe");
         }

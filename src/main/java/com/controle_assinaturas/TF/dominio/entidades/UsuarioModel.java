@@ -1,11 +1,11 @@
 package com.controle_assinaturas.TF.dominio.entidades;
 
-public class Usuario {
+public class UsuarioModel {
 
     private String usuario;
     private String senha;
 
-    public Usuario(String usuario, String senha) {
+    public UsuarioModel(String usuario, String senha) {
         this.usuario = usuario;
         this.senha = senha;
     }
