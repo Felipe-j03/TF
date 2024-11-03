@@ -3,8 +3,10 @@ package com.controle_assinaturas.TF.dominio.servicos;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
+import com.controle_assinaturas.TF.dominio.repositorios.IAplicativoRepositorio;
 import com.controle_assinaturas.TF.dominio.repositorios.IAssinaturaRepositorio;
 import com.controle_assinaturas.TF.dominio.repositorios.IPagamentoRepositorio;
 
@@ -12,16 +14,24 @@ public class PagamentoServico {
 
     private final IAssinaturaRepositorio assinaturaRepositorio;
     private final IPagamentoRepositorio pagamentoRepositorio;
+    private final IAplicativoRepositorio aplicativoRepositorio;
 
-    public PagamentoServico(IAssinaturaRepositorio assinaturaRepositorio, IPagamentoRepositorio pagamentoRepositorio) {
+    public PagamentoServico(IAplicativoRepositorio aplicativoRepositorio, IAssinaturaRepositorio assinaturaRepositorio, IPagamentoRepositorio pagamentoRepositorio) {
+        this.aplicativoRepositorio = aplicativoRepositorio;
         this.assinaturaRepositorio = assinaturaRepositorio;
         this.pagamentoRepositorio = pagamentoRepositorio;
     }
 
     public LocalDate registrarPagamento(long assinaturaId, double valorPago, String promocao) {
         AssinaturaModel assinatura = assinaturaRepositorio.consultaPorCod(assinaturaId);
-        if(assinatura == null){
-                throw new IllegalArgumentException("Assinatura não encontrada.");
+        if (assinatura == null) {
+            throw new IllegalArgumentException("Assinatura não encontrada.");
+        }
+
+        AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(assinatura.getAplicativo().getCodigo());
+
+        if (aplicativo == null) {
+            throw new IllegalArgumentException("Aplicativo associado à assinatura não encontrado");
         }
 
         // Verificar se o valor pago está correto
@@ -49,6 +59,7 @@ public class PagamentoServico {
     private boolean isValorPagamentoCorreto(AssinaturaModel assinatura, double valorPago, String promocao) {
         double custoBase = assinatura.getAplicativo().getCustoMensal();
         if ("ANUAL_40_OFF".equals(promocao)) {
+            
             return valorPago == (custoBase * 12 * 0.6);
         } else {
             return valorPago == custoBase;
@@ -80,7 +91,7 @@ public class PagamentoServico {
      * Salva o pagamento no banco de dados para manter o histórico.
      */
     private void salvarPagamento(AssinaturaModel assinatura, double valorPago, String promocao) {
-        PagamentoModel pagamento = new PagamentoModel(0, valorPago, assinatura, LocalDate.now(), promocao);
+        PagamentoModel pagamento = new PagamentoModel(assinatura.getCodigo(), valorPago, assinatura, LocalDate.now(), promocao);
 
         pagamentoRepositorio.salvar(pagamento);
     }
@@ -91,7 +102,7 @@ public class PagamentoServico {
      * @param assinaturaId ID da assinatura para obter o histórico.
      * @return Lista de pagamentos feitos para a assinatura.
      */
-    public List<PagamentoModel> obterHistoricoPagamentos(Long assinaturaId) {
+    public List<PagamentoModel> obterHistoricoPagamentos(long assinaturaId) {
         return pagamentoRepositorio.historicoPagamentoPorID(assinaturaId);
     }
 }
