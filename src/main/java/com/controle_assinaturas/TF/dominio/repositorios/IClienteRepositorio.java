@@ -8,8 +8,5 @@ import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 public interface IClienteRepositorio {
 
     public List<ClienteModel> listarClientes();
-    public List<AssinaturaModel> listarAssinaturas();
     public ClienteModel procuraPorCod(long codigo);
-    public void cadastrarAssinatura(AssinaturaModel assinatura);
-
 }

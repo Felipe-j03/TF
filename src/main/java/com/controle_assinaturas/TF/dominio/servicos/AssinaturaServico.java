@@ -26,10 +26,6 @@ public class AssinaturaServico {
         return assinaturaRepositorio.listarAssinaturas();
     }
 
-    public List<AssinaturaModel> assinaturasValidas() {
-        return assinaturaRepositorio.listarAssinaturasValidas();
-    }
-
     public AssinaturaModel consultarPorId(long id) {
         return assinaturaRepositorio.consultaPorCod(id);
     }
