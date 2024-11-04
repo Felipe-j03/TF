@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
+import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -82,11 +83,19 @@ public class Assinatura {
     }
 
     public static AssinaturaModel toAssinaturaModel(Assinatura assinatura) {
-        return new AssinaturaModel(assinatura.getCodigo(), assinatura.getInicioVigencia(), assinatura.getFimVigencia(), Aplicativo.toAplicativoModel(assinatura.getAplicativo()), assinatura.getCliente());
+
+        AplicativoModel aplicativo = Aplicativo.toAplicativoModel(assinatura.getAplicativo());
+        ClienteModel cliente = Cliente.toClienteModel(assinatura.getCliente());
+
+        return new AssinaturaModel(assinatura.getCodigo(), assinatura.getInicioVigencia(), assinatura.getFimVigencia(), aplicativo, cliente);
     }
 
-    public static Aplicativo toAplicativo(AplicativoModel assinatura) {
-        return new Aplicativo(assinatura.getCodigo(), assinatura.getNome(), assinatura.getCustoMensal());
+    public static Assinatura toAssinatura(AssinaturaModel assinatura) {
+
+        Aplicativo aplicativo = Aplicativo.toAplicativo(assinatura.getAplicativo());
+        Cliente cliente = Cliente.toCliente(assinatura.getCliente());
+
+        return new Assinatura(assinatura.getCodigo(), assinatura.getInicioVigencia(), assinatura.getFimVigencia(), aplicativo, cliente);
     }
 
 }

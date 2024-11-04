@@ -1,6 +1,6 @@
 package com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.interfaceJPA;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,5 +8,5 @@ import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Pa
 
 public interface PagamentoJPA extends JpaRepository<Pagamento, Long> {
 
-    List<Pagamento> findByAssinaturaId(Long assinaturaId);
+    Optional<Pagamento> findByPagamentoId(Long pagamentoId);
 }

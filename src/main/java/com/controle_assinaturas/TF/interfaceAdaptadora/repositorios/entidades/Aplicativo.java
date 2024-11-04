@@ -51,11 +51,11 @@ public class Aplicativo {
     }
     
     public static AplicativoModel toAplicativoModel(Aplicativo aplicativo) {
-        return new AplicativoModel(aplicativo.getCodigo(),aplicativo.getNome(),aplicativo.getCustoMensal());
+        return new AplicativoModel(aplicativo.getCodigo(), aplicativo.getNome(), aplicativo.getCustoMensal());
     }
 
     public static Aplicativo toAplicativo(AplicativoModel aplicativo) {
-        return new Aplicativo(aplicativo.getCodigo(),aplicativo.getNome(),aplicativo.getCustoMensal());
+        return new Aplicativo(aplicativo.getCodigo(), aplicativo.getNome(), aplicativo.getCustoMensal());
     }
 
 }

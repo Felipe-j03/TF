@@ -1,5 +1,7 @@
 package com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades;
 
+import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +38,11 @@ public class Cliente {
         return email;
     }
     
-    
+    public static ClienteModel toClienteModel(Cliente cliente){
+        return new ClienteModel(cliente.getCodigo(), cliente.getNome(), cliente.getEmail());
+    }
+    public static Cliente toCliente(ClienteModel cliente){
+        return new Cliente(cliente.getCodigo(), cliente.getNome(), cliente.getEmail());
+    }
     
 }
