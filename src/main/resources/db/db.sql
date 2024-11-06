@@ -1,3 +1,39 @@
+CREATE TABLE aplicativo(
+    codigo BIGINT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    custoMensal DOUBLE PRECISION NOT NULL
+)
+
+CREATE TABLE cliente(
+    codigo BIGINT PRIMARY KEY,
+    nome VARCHAR(50),
+    custoMensal VARCHAR(50)
+)
+
+CREATE TABLE assinatura(
+    codigo BIGINT PRIMARY KEY,
+    aplicativo BIGINT NOT NULL,
+    cliente BIGINT NOT NULL,
+    inicioVigencia DATE NOT NULL,
+    fimVigencia DATE NOT NULL,
+    FOREIGN KEY (aplicativo) REFERENCES aplicativo(codigo),
+    FOREIGN KEY (cliente) REFERENCES cliente(codigo)
+)
+
+CREATE TABLE pagamento(
+    codigo BIGINT PRIMARY KEY,
+    assinatura BIGINT NOT NULL,
+    valorPago DOUBLE PRECISION NOT NULL,
+    dataPagamento DATE NOT NULL,
+    promocao VARCHAR(50),
+    FOREIGN KEY (assinatura) REFERENCES assinatura(codigo)
+)
+
+CREATE TABLE usuario(
+    usuario VARCHAR(50) PRIMARY KEY,
+    senha VARCHAR(50) NOT NULL
+)
+
 INSERT INTO aplicativo (codigo, nome, custoMensal) VALUES (1, 'StreamFlix', 40.0);
 INSERT INTO aplicativo (codigo, nome, custoMensal) VALUES (2, 'FitLife', 15.0);
 INSERT INTO aplicativo (codigo, nome, custoMensal) VALUES (3, 'Easy Food', 10.0);
