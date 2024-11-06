@@ -58,9 +58,8 @@ public class PagamentoServico {
      */
     private boolean isValorPagamentoCorreto(AssinaturaModel assinatura, double valorPago, String promocao) {
         double custoBase = assinatura.getAplicativo().getCustoMensal();
-        if ("ANUAL_40_OFF".equals(promocao)) {
-            
-            return valorPago == (custoBase * 12 * 0.6);
+        if ("ANUAL_40_OFF".equals(promocao)) {          
+            return valorPago == (custoBase * 12 * 0.4);
         } else {
             return valorPago == custoBase;
         }

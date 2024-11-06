@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IPagamentoRepositorio;
-import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Assinatura;
 import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Pagamento;
 import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.interfaceJPA.PagamentoJPA;
 
