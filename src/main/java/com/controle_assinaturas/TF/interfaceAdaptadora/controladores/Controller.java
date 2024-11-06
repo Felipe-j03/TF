@@ -43,21 +43,25 @@ public class Controller {
     }
 
     @PostMapping("/assinaturas")
-    public ResponseEntity<AssinaturaModel> criarAssinatura(@RequestParam Long codigoCliente, @RequestParam Long codigoAplicativo) {
+    public ResponseEntity<AssinaturaModel> criarAssinatura(@RequestParam Long codigoCliente,
+            @RequestParam Long codigoAplicativo) {
         AssinaturaModel assinatura = assinaturaServico.criarAssinatura(codigoCliente, codigoAplicativo);
         return ResponseEntity.ok(assinatura);
     }
 
     @PostMapping("/aplicativos/custo/{idAplicativo}")
-    public ResponseEntity<AplicativoModel> atualizarCusto(@PathVariable Long idAplicativo, @RequestBody Double novoCusto) {
+    public ResponseEntity<AplicativoModel> atualizarCusto(@PathVariable Long idAplicativo,
+            @RequestBody Double novoCusto) {
         AplicativoModel aplicativo = aplicativoServico.atualizarPrecoApp(idAplicativo, novoCusto);
         return ResponseEntity.ok(aplicativo);
     }
 
-    @GetMapping("/assinaturas/{tipo}")
-    public List<AssinaturaModel> listarAssinaturas(@PathVariable String tipo) {
-        return assinaturaServico.listarAssinaturasPorTipo(tipo);
-    }
+    /*
+     * @GetMapping("/assinaturas/{tipo}")
+     * public List<AssinaturaModel> listarAssinaturas(@PathVariable String tipo) {
+     * return assinaturaServico.listarAssinaturasPorTipo(tipo);
+     * }
+     */
 
     @GetMapping("/clientes/{codcli}/assinaturas")
     public List<AssinaturaModel> listarAssinaturasCliente(@PathVariable Long codcli) {
@@ -69,14 +73,18 @@ public class Controller {
         return assinaturaServico.listarAssinantesPorAplicativo(codapp);
     }
 
-    @PostMapping("/registrarpagamento")
-    public ResponseEntity<String> registrarPagamento(@RequestParam Long codass, @RequestParam Double valorPago, 
-                                                     @RequestParam int dia, @RequestParam int mes, @RequestParam int ano) {
-        return pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano);
-    }
-
-    @GetMapping("/assinvalida/{codass}")
-    public boolean isAssinaturaValida(@PathVariable Long codass) {
-        return assinaturaServico.isAssinaturaValida(codass);
-    }
+    /*
+     * @PostMapping("/registrarpagamento")
+     * public ResponseEntity<String> registrarPagamento(@RequestParam Long
+     * codass, @RequestParam Double valorPago,
+     * 
+     * @RequestParam int dia, @RequestParam int mes, @RequestParam int ano) {
+     * return pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano);
+     * }
+     * 
+     * @GetMapping("/assinvalida/{codass}")
+     * public boolean isAssinaturaValida(@PathVariable Long codass) {
+     * return assinaturaServico.isAssinaturaValida(codass);
+     * }
+     */
 }
