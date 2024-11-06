@@ -1,14 +1,13 @@
 
 package com.controle_assinaturas.TF.interfaceAdaptadora.controladores;
-
 import com.controle_assinaturas.TF.dominio.servicos.AssinaturaServico;
-import com.controle_assinaturas.TF.dominio.servicos.ClienteServico;
 import com.controle_assinaturas.TF.dominio.servicos.PagamentoServico;
 import com.controle_assinaturas.TF.dominio.servicos.AplicativoServico;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
+import com.controle_assinaturas.TF.dominio.servicos.ClienteServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
