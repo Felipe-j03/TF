@@ -2,6 +2,7 @@ package com.controle_assinaturas.TF.dominio.servicos;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
@@ -30,7 +31,10 @@ public class AssinaturaServico {
         return assinaturaRepositorio.consultaPorCod(id);
     }
 
-    public AssinaturaModel criarAssinatura(long id, long clienteId, long aplicativoId) {
+    public AssinaturaModel criarAssinatura(long clienteId, long aplicativoId) {
+        
+        int i = 0;
+        int id = i++;
 
         ClienteModel cliente = clienteRepositorio.procuraPorCod(clienteId);
         AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(aplicativoId);
