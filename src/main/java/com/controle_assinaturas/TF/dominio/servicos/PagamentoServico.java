@@ -77,9 +77,9 @@ public class PagamentoServico {
             validadeAtual = dataAtual;
         }
 
-        if ("PAGUE_30_GANHE_45".equals(promocao)) {
+        if (promocao.equals("PAGUE_30_GANHE_45")) {
             return validadeAtual.plusDays(45);
-        } else if ("ANUAL_40_OFF".equals(promocao)) {
+        } else if (promocao.equals("ANUAL_40_OFF")) {
             return validadeAtual.plusDays(365);
         } else {
             return validadeAtual.plusDays(30); // Extensão padrão de 30 dias para o plano básico
