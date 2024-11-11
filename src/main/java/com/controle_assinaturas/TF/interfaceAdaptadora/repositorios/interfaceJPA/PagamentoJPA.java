@@ -2,11 +2,12 @@ package com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.interfaceJP
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Pagamento;
 
-public interface PagamentoJPA extends JpaRepository<Pagamento, Long> {
 
-    Optional<Pagamento> findByPagamentoId(Long pagamentoId);
+public interface PagamentoJPA extends ListCrudRepository<Pagamento, Long> {
+
+    Optional<Pagamento> findByCodigo(Long pagamentoId);
 }

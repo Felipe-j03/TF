@@ -7,7 +7,7 @@ import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 public interface IAplicativoRepositorio {
 
     public List<AplicativoModel> listarApps();
-    public AplicativoModel consultaPorCod(long codigo);
+    public AplicativoModel consultaPorCod(Long codigo);
     public void salvar(AplicativoModel aplicativo);
 
 }

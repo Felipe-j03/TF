@@ -20,7 +20,7 @@ public class PagamentoJPAImp implements IPagamentoRepositorio {
     }
 
     @Override
-    public List<PagamentoModel> historicoPagamentoPorID(long assinaturaId) {
+    public List<PagamentoModel> historicoPagamentoPorID(Long assinaturaId) {
         // Obtém todos os pagamentos
         List<Pagamento> pagamentos = pagamentoJPA.findAll();
 

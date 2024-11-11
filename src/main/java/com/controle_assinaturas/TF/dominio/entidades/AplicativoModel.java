@@ -2,17 +2,17 @@ package com.controle_assinaturas.TF.dominio.entidades;
 
 public class AplicativoModel {
 
-    private long codigo;
+    private Long codigo;
     private String nome;
     private double custoMensal;
 
-    public AplicativoModel(long codigo, String nome, double custoMensal) {
+    public AplicativoModel(Long codigo, String nome, double custoMensal) {
         this.codigo = codigo;
         this.nome = nome;
         this.custoMensal = custoMensal;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
@@ -24,7 +24,7 @@ public class AplicativoModel {
         return custoMensal;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 

@@ -6,35 +6,27 @@ import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Assinatura {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    private Long codigo;
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "aplicativo_id")
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Aplicativo aplicativo;
-
     private LocalDate inicioVigencia;
     private LocalDate fimVigencia;
 
     protected Assinatura() {
     }
 
-    public Assinatura(long codigo, LocalDate inicioVigencia, LocalDate fimVigencia, Aplicativo aplicativo, Cliente cliente) {
+    public Assinatura(Long codigo, Aplicativo aplicativo, Cliente cliente, LocalDate inicioVigencia, LocalDate fimVigencia) {
         this.codigo = codigo;
         this.inicioVigencia = inicioVigencia;
         this.fimVigencia = fimVigencia;
@@ -42,7 +34,7 @@ public class Assinatura {
         this.cliente = cliente;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
@@ -62,7 +54,7 @@ public class Assinatura {
         return cliente;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 
@@ -87,7 +79,7 @@ public class Assinatura {
         AplicativoModel aplicativo = Aplicativo.toAplicativoModel(assinatura.getAplicativo());
         ClienteModel cliente = Cliente.toClienteModel(assinatura.getCliente());
 
-        return new AssinaturaModel(assinatura.getCodigo(), assinatura.getInicioVigencia(), assinatura.getFimVigencia(), aplicativo, cliente);
+        return new AssinaturaModel(assinatura.getCodigo(), aplicativo, cliente, assinatura.getInicioVigencia(), assinatura.getFimVigencia());
     }
 
     public static Assinatura toAssinatura(AssinaturaModel assinatura) {
@@ -95,7 +87,7 @@ public class Assinatura {
         Aplicativo aplicativo = Aplicativo.toAplicativo(assinatura.getAplicativo());
         Cliente cliente = Cliente.toCliente(assinatura.getCliente());
 
-        return new Assinatura(assinatura.getCodigo(), assinatura.getInicioVigencia(), assinatura.getFimVigencia(), aplicativo, cliente);
+        return new Assinatura(assinatura.getCodigo(), aplicativo, cliente, assinatura.getInicioVigencia(), assinatura.getFimVigencia());
     }
 
 }

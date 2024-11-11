@@ -12,21 +12,20 @@ public class Aplicativo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
-
+    private Long codigo;
     private String nome;
     private Double custoMensal;
 
     protected Aplicativo() {
     }
 
-    public Aplicativo(long codigo, String nome, double custoMensal) {
+    public Aplicativo(Long codigo, String nome, Double custoMensal) {
         this.codigo = codigo;
         this.nome = nome;
         this.custoMensal = custoMensal;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
@@ -34,11 +33,11 @@ public class Aplicativo {
         return nome;
     }
 
-    public double getCustoMensal() {
+    public Double getCustoMensal() {
         return custoMensal;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
 
@@ -46,10 +45,15 @@ public class Aplicativo {
         this.nome = nome;
     }
 
-    public void setCustoMensal(double custoMensal) {
+    public void setCustoMensal(Double custoMensal) {
         this.custoMensal = custoMensal;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Aplicativo [codigo=" + codigo + ", nome=" + nome + ", custoMensal=" + custoMensal + "]";
+    }
+
     public static AplicativoModel toAplicativoModel(Aplicativo aplicativo) {
         return new AplicativoModel(aplicativo.getCodigo(), aplicativo.getNome(), aplicativo.getCustoMensal());
     }

@@ -7,9 +7,9 @@ import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 public interface IAssinaturaRepositorio {
 
     public List<AssinaturaModel> listarAssinaturas();
-    public List<AssinaturaModel> listarAssinaturaPorCliente(long clienteId);
-    public List<AssinaturaModel> listarAssinantesPorAplicativo(long aplicativoId);
-    public AssinaturaModel consultaPorCod(long codigo);
+    public List<AssinaturaModel> listarAssinaturaPorCliente(Long clienteId);
+    public List<AssinaturaModel> listarAssinantesPorAplicativo(Long aplicativoId);
+    public AssinaturaModel consultaPorCod(Long codigo);
     public void salvar(AssinaturaModel assinatura);
     
 }

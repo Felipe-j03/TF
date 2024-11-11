@@ -22,12 +22,14 @@ public class ClienteJPAImp implements IClienteRepositorio {
     public List<ClienteModel> listarClientes() {
 
         List<Cliente> clientes = clienteJPA.findAll();
+        
+        this.procuraPorCod(Long.valueOf(10));
 
         return clientes.stream().map(assn -> Cliente.toClienteModel(assn)).toList();
     }
 
     @Override
-    public ClienteModel procuraPorCod(long codigo) {
+    public ClienteModel procuraPorCod(Long codigo) {
 
         List<Cliente> clientes = clienteJPA.findAll();
 

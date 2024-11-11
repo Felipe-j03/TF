@@ -2,18 +2,20 @@ package com.controle_assinaturas.TF.dominio.servicos;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IAplicativoRepositorio;
 
+@Service
 public class AplicativoServico {
-
     private final IAplicativoRepositorio aplicativoRepositorio;
 
     public AplicativoServico(IAplicativoRepositorio aplicativoRepositorio) {
         this.aplicativoRepositorio = aplicativoRepositorio;
     }
 
-    public AplicativoModel atualizarPrecoApp(long aplicativoId, double novoPreco) {
+    public AplicativoModel atualizarPrecoApp(Long aplicativoId, Double novoPreco) {
 
         AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(aplicativoId);
 
@@ -28,6 +30,7 @@ public class AplicativoServico {
     }
 
     public List<AplicativoModel> listarAplicativos() {
-        return aplicativoRepositorio.listarApps();
+            List<AplicativoModel> aplicativos = aplicativoRepositorio.listarApps();
+        return aplicativos.stream().toList();
     }
 }

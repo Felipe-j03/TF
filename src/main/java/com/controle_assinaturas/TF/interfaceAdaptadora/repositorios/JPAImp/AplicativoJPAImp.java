@@ -22,19 +22,16 @@ public class AplicativoJPAImp implements IAplicativoRepositorio {
     public List<AplicativoModel> listarApps() {
         List<Aplicativo> aplicativos = aplicativoJPA.findAll();
         return aplicativos.stream()
-                .map(app -> Aplicativo.toAplicativoModel(app))
+                .map(Aplicativo::toAplicativoModel)
                 .toList();
 
     }
 
     @Override
-    public AplicativoModel consultaPorCod(long codigo) {
-        Aplicativo aplicativo = aplicativoJPA.findByAplicativoId(codigo).orElse(null);
-        if (aplicativo == null) {
-            return null;
-        } else {
-            return Aplicativo.toAplicativoModel(aplicativo);
-        }
+    public AplicativoModel consultaPorCod(Long codigo) {
+        return aplicativoJPA.findById(codigo)
+                .map(Aplicativo::toAplicativoModel)
+                .orElse(null);
     }
 
     @Override

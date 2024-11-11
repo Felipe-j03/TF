@@ -6,7 +6,7 @@ import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 
 public interface IPagamentoRepositorio {
     
-    public List<PagamentoModel> historicoPagamentoPorID(long assinaturaId);
+    public List<PagamentoModel> historicoPagamentoPorID(Long assinaturaId);
     public void salvar(PagamentoModel pagamento);
 
 }

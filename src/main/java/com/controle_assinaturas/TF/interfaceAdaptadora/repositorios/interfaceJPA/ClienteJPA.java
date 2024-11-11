@@ -2,12 +2,12 @@ package com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.interfaceJP
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Cliente;
 
-public interface ClienteJPA extends JpaRepository<Cliente, Long> {
-    Optional<Cliente> findClienteById(long id);
+public interface ClienteJPA extends ListCrudRepository<Cliente, Long> {
+    
     
 }
 

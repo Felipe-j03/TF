@@ -4,13 +4,14 @@ import java.time.LocalDate;
 
 public class PagamentoModel {
 
-    private long codigo;
-    private double valorPago;
+    private Long codigo;
     private AssinaturaModel assinatura;
+    private Double valorPago;
     private LocalDate dataPagamento;
     private String promocao;
 
-    public PagamentoModel(long codigo, double valorPago, AssinaturaModel assinatura, LocalDate dataPagamento, String promocao) {
+    public PagamentoModel(Long codigo, AssinaturaModel assinatura, Double valorPago, LocalDate dataPagamento,
+            String promocao) {
         this.codigo = codigo;
         this.valorPago = valorPago;
         this.assinatura = assinatura;
@@ -18,7 +19,7 @@ public class PagamentoModel {
         this.promocao = promocao;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
@@ -26,7 +27,7 @@ public class PagamentoModel {
         return assinatura;
     }
 
-    public double getValorPago() {
+    public Double getValorPago() {
         return valorPago;
     }
 

@@ -5,40 +5,34 @@ import java.time.LocalDate;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
-
-    @ManyToOne
-    @JoinColumn(name = "assinatura_id")
+    private Long codigo;
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Assinatura assinatura;
-
+    private Double valorPago;
     private LocalDate dataPagamento;
-    private double valorPago;
     private String promocao;
 
     protected Pagamento() {
     }
 
-    public Pagamento(long codigo, double valorPago, Assinatura assinatura, LocalDate dataPagamento, String promocao) {
+    public Pagamento(Long codigo, Assinatura assinatura, Double valorPago, LocalDate dataPagamento, String promocao) {
         this.codigo = codigo;
-        this.valorPago = valorPago;
         this.assinatura = assinatura;
+        this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         this.promocao = promocao;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
@@ -46,7 +40,7 @@ public class Pagamento {
         return assinatura;
     }
 
-    public double getValorPago() {
+    public Double getValorPago() {
         return valorPago;
     }
 
@@ -62,13 +56,13 @@ public class Pagamento {
 
         AssinaturaModel assinatura = Assinatura.toAssinaturaModel(pagamento.getAssinatura());
 
-        return new PagamentoModel(pagamento.getCodigo(), pagamento.getValorPago(), assinatura, pagamento.getDataPagamento(), pagamento.getPromocao());
+        return new PagamentoModel(pagamento.getCodigo(), assinatura, pagamento.getValorPago(), pagamento.getDataPagamento(), pagamento.getPromocao());
     }
 
     public static Pagamento toPagamento(PagamentoModel pagamento) {
 
         Assinatura assinatura = Assinatura.toAssinatura(pagamento.getAssinatura());
 
-        return new Pagamento(pagamento.getCodigo(), pagamento.getValorPago(), assinatura, pagamento.getDataPagamento(), pagamento.getPromocao());
+        return new Pagamento(pagamento.getCodigo(), assinatura, pagamento.getValorPago(), pagamento.getDataPagamento(), pagamento.getPromocao());
     }
 }

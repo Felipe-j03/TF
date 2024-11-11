@@ -30,7 +30,7 @@ public class AssinaturaJPAImp implements IAssinaturaRepositorio {
     }
 
     @Override
-    public List<AssinaturaModel> listarAssinaturaPorCliente(long clienteId) {
+    public List<AssinaturaModel> listarAssinaturaPorCliente(Long clienteId) {
 
         List<Assinatura> assinaturas = assinaturaJPA.findAll();
 
@@ -44,7 +44,7 @@ public class AssinaturaJPAImp implements IAssinaturaRepositorio {
     }
 
     @Override
-    public List<AssinaturaModel> listarAssinantesPorAplicativo(long aplicativoId) {
+    public List<AssinaturaModel> listarAssinantesPorAplicativo(Long aplicativoId) {
 
         List<Assinatura> assinaturas = assinaturaJPA.findAll();
 
@@ -57,7 +57,7 @@ public class AssinaturaJPAImp implements IAssinaturaRepositorio {
     }
 
     @Override
-    public AssinaturaModel consultaPorCod(long codigo) {
+    public AssinaturaModel consultaPorCod(Long codigo) {
         // Obtém todas as assinaturas
         List<Assinatura> assinaturas = assinaturaJPA.findAll();
 

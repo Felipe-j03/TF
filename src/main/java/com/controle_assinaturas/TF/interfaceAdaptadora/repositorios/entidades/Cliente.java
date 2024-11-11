@@ -3,30 +3,26 @@ package com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades;
 import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long codigo;
-
+    private Long codigo;
     private String nome;
     private String email;
 
     protected Cliente() {
     }
 
-    public Cliente(long codigo, String nome, String email) {
+    public Cliente(Long codigo, String nome, String email) {
         this.codigo = codigo;
         this.nome = nome;
         this.email = email;
     }
 
-    public long getCodigo() {
+    public Long getCodigo() {
         return codigo;
     }
 
