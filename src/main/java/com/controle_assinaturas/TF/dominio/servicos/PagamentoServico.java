@@ -8,30 +8,29 @@ import org.springframework.stereotype.Service;
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
-import com.controle_assinaturas.TF.dominio.repositorios.IAplicativoRepositorio;
-import com.controle_assinaturas.TF.dominio.repositorios.IAssinaturaRepositorio;
 import com.controle_assinaturas.TF.dominio.repositorios.IPagamentoRepositorio;
 
 @Service
 public class PagamentoServico {
-    private final IAssinaturaRepositorio assinaturaRepositorio;
     private final IPagamentoRepositorio pagamentoRepositorio;
-    private final IAplicativoRepositorio aplicativoRepositorio;
+    private final AssinaturaServico assinaturaServico;
+    private final AplicativoServico aplicativoServico;
 
-    public PagamentoServico(IAplicativoRepositorio aplicativoRepositorio, IAssinaturaRepositorio assinaturaRepositorio,
+    public PagamentoServico(AplicativoServico aplicativoServico, AssinaturaServico assinaturaServico,
             IPagamentoRepositorio pagamentoRepositorio) {
-        this.aplicativoRepositorio = aplicativoRepositorio;
-        this.assinaturaRepositorio = assinaturaRepositorio;
+        this.aplicativoServico = aplicativoServico;
+        this.assinaturaServico = assinaturaServico;
         this.pagamentoRepositorio = pagamentoRepositorio;
     }
 
-    public LocalDate registrarPagamento(Long assinaturaId, Double valorPago, String promocao) {
-        AssinaturaModel assinatura = assinaturaRepositorio.consultaPorCod(assinaturaId);
+    public LocalDate registrarPagamento(Long assinaturaId, Double valorPago, int dia, int mes, int  ano) {
+        AssinaturaModel assinatura = assinaturaServico.consultaPorCodigo(assinaturaId);
+        LocalDate data = LocalDate.of(dia, mes, ano);
         if (assinatura == null) {
             throw new IllegalArgumentException("Assinatura não encontrada.");
         }
 
-        AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(assinatura.getAplicativo().getCodigo());
+        AplicativoModel aplicativo = aplicativoServico.consultaPorCod(assinatura.getAplicativo().getCodigo());
 
         if (aplicativo == null) {
             throw new IllegalArgumentException("Aplicativo associado à assinatura não encontrado");
@@ -48,7 +47,7 @@ public class PagamentoServico {
 
         // Atualizar validade da assinatura e salvar pagamento
         assinatura.setFimVigencia(novaDataValidade);
-        assinaturaRepositorio.salvar(assinatura);
+        assinaturaServico.salvar(assinatura);
 
         salvarPagamento(assinatura, valorPago, promocao);
 

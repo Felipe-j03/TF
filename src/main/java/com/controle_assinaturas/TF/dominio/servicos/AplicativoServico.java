@@ -15,9 +15,20 @@ public class AplicativoServico {
         this.aplicativoRepositorio = aplicativoRepositorio;
     }
 
+    public List<AplicativoModel> listarAplicativos() {
+        List<AplicativoModel> aplicativos = aplicativoRepositorio.listarApps();
+        return aplicativos.stream().toList();
+    }
+
+    public AplicativoModel consultaPorCod(Long codigo) {
+        List<AplicativoModel> aplicativos = aplicativoRepositorio.listarApps();
+        return aplicativos.stream().filter(app -> app.getCodigo() == codigo).findFirst().orElse(null);
+
+    }
+
     public AplicativoModel atualizarPrecoApp(Long aplicativoId, Double novoPreco) {
 
-        AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(aplicativoId);
+        AplicativoModel aplicativo = consultaPorCod(aplicativoId);
 
         if (aplicativo == null) {
             throw new IllegalArgumentException("Aplicativo inválido");
@@ -27,10 +38,5 @@ public class AplicativoServico {
         aplicativoRepositorio.salvar(aplicativo);
         return aplicativo;
 
-    }
-
-    public List<AplicativoModel> listarAplicativos() {
-            List<AplicativoModel> aplicativos = aplicativoRepositorio.listarApps();
-        return aplicativos.stream().toList();
     }
 }

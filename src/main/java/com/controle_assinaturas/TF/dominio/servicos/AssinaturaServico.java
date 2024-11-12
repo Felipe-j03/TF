@@ -8,37 +8,38 @@ import org.springframework.stereotype.Service;
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
-import com.controle_assinaturas.TF.dominio.repositorios.IAplicativoRepositorio;
 import com.controle_assinaturas.TF.dominio.repositorios.IAssinaturaRepositorio;
-import com.controle_assinaturas.TF.dominio.repositorios.IClienteRepositorio;
 
 @Service
 public class AssinaturaServico {
     private final IAssinaturaRepositorio assinaturaRepositorio;
-    private final IClienteRepositorio clienteRepositorio;
-    private final IAplicativoRepositorio aplicativoRepositorio;
+    private final ClienteServico clienteServico;
+    private final AplicativoServico aplicativoServico;
 
-    public AssinaturaServico(IAplicativoRepositorio aplicativoRepositorio, IAssinaturaRepositorio assinaturaRepositorio,
-            IClienteRepositorio clienteRepositorio) {
-        this.aplicativoRepositorio = aplicativoRepositorio;
+    public AssinaturaServico(AplicativoServico aplicativoServico, IAssinaturaRepositorio assinaturaRepositorio,
+            ClienteServico clienteServico) {
+        this.aplicativoServico = aplicativoServico;
         this.assinaturaRepositorio = assinaturaRepositorio;
-        this.clienteRepositorio = clienteRepositorio;
+        this.clienteServico = clienteServico;
     }
 
     public List<AssinaturaModel> listarAssinaturas() {
-        return assinaturaRepositorio.listarAssinaturas();
+        List<AssinaturaModel> assinaturas = assinaturaRepositorio.listarAssinaturas();
+        return assinaturas.stream().toList();
     }
 
-    public AssinaturaModel consultarPorId(Long id) {
-        return assinaturaRepositorio.consultaPorCod(id);
+    public AssinaturaModel consultaPorCodigo(Long codigo) {
+        List<AssinaturaModel> assinaturas = assinaturaRepositorio.listarAssinaturas();
+        return assinaturas.stream().filter(ass -> ass.getCodigo() == codigo).findFirst().orElse(null);
     }
 
-    public AssinaturaModel criarAssinatura(Long clienteId, Long aplicativoId) {
+    public AssinaturaModel criarAssinatura(Long codigoCliente, Long codigoAplicativo) {
 
-        long id = 1;
+        int i = 1;
+        long id = i;
 
-        ClienteModel cliente = clienteRepositorio.procuraPorCod(clienteId);
-        AplicativoModel aplicativo = aplicativoRepositorio.consultaPorCod(aplicativoId);
+        ClienteModel cliente = clienteServico.procuraPorCod(codigoCliente);
+        AplicativoModel aplicativo = aplicativoServico.consultaPorCod(codigoAplicativo);
 
         if (cliente == null && aplicativo == null) {
             throw new IllegalArgumentException("Cliente ou Aplicativo não encontrado");
@@ -47,7 +48,7 @@ public class AssinaturaServico {
         AssinaturaModel assinatura = new AssinaturaModel(id, aplicativo, cliente, LocalDate.now(),
                 LocalDate.now().plusDays(7));
         assinaturaRepositorio.salvar(assinatura);
-        id++;
+        i++;
 
         return assinatura;
     }
@@ -56,12 +57,18 @@ public class AssinaturaServico {
         return assinatura.getFimVigencia().isAfter(LocalDate.now());
     }
 
-    public List<AssinaturaModel> listarAssinaturasPorCliente(Long clienteId) {
-        return assinaturaRepositorio.listarAssinaturaPorCliente(clienteId);
+    public List<AssinaturaModel> listarAssinaturasPorCliente(Long codigoCliente) {
+        return assinaturaRepositorio.listarAssinaturaPorCliente(codigoCliente);
     }
 
-    public List<AssinaturaModel> listarAssinantesPorAplicativo(Long aplicativoId) {
-        return assinaturaRepositorio.listarAssinantesPorAplicativo(aplicativoId);
+    public List<AssinaturaModel> listarAssinantesPorAplicativo(Long codigoAplicativo) {
+        return assinaturaRepositorio.listarAssinantesPorAplicativo(codigoAplicativo);
     }
+    
+    public void salvar(AssinaturaModel assinatura){
+        assinaturaRepositorio.salvar(assinatura);
+    }
+    
+    
 
 }

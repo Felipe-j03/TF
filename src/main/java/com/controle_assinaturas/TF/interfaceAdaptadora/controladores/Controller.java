@@ -31,13 +31,11 @@ public class Controller {
     @Autowired
     private PagamentoServico pagamentoServico;
 
-        
     @GetMapping("")
-    public String welcomeMessage(){
-        return("Bem vindo ao Controle de Assinaturas");
+    public String welcomeMessage() {
+        return ("Bem vindo ao Controle de Assinaturas");
     }
-    
-    
+
     @GetMapping("/clientes")
     public List<ClienteModel> listarClientes() {
         return clienteServico.listarClientes();
@@ -79,18 +77,15 @@ public class Controller {
         return assinaturaServico.listarAssinantesPorAplicativo(codapp);
     }
 
-    /*
-     * @PostMapping("/registrarpagamento")
-     * public ResponseEntity<String> registrarPagamento(@RequestParam Long
-     * codass, @RequestParam Double valorPago,
-     * 
-     * @RequestParam int dia, @RequestParam int mes, @RequestParam int ano) {
-     * return pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano);
-     * }
-     * 
-     * @GetMapping("/assinvalida/{codass}")
-     * public boolean isAssinaturaValida(@PathVariable Long codass) {
-     * return assinaturaServico.isAssinaturaValida(codass);
-     * }
-     */
+    @PostMapping("/registrarpagamento")
+    public ResponseEntity<String> registrarPagamento(@RequestParam Long codass, @RequestParam Double valorPago,
+            @RequestParam int dia, @RequestParam int mes, @RequestParam int ano) {
+        return pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano);
+    }
+
+    @GetMapping("/assinvalida/{codass}")
+    public boolean isAssinaturaValida(@PathVariable Long codass) {
+        return assinaturaServico.isAssinaturaValida(assinaturaServico.consultaPorCodigo(codass));
+    }
+
 }
