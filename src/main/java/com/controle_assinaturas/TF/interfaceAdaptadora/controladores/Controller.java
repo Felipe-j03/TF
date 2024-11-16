@@ -2,11 +2,16 @@ package com.controle_assinaturas.TF.interfaceAdaptadora.controladores;
 
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.ClienteModel;
+import com.controle_assinaturas.TF.aplicacao.UC.CriaAssinaturaUC;
+import com.controle_assinaturas.TF.aplicacao.UC.ListaPorTipoUC;
+import com.controle_assinaturas.TF.aplicacao.UC.ListaPorTipoUC;
+import com.controle_assinaturas.TF.aplicacao.dto.AssinaturaDTO;
 import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 import com.controle_assinaturas.TF.dominio.servicos.AssinaturaServico;
 import com.controle_assinaturas.TF.dominio.servicos.ClienteServico;
 import com.controle_assinaturas.TF.dominio.servicos.PagamentoServico;
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 import com.controle_assinaturas.TF.dominio.servicos.AplicativoServico;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +36,23 @@ public class Controller {
     @Autowired
     private PagamentoServico pagamentoServico;
 
+    @Autowired
+    private CriaAssinaturaUC criaAssinaturaUC;
+
+    @Autowired
+    private ListaPorTipoUC listaPorTipoUC;
+
+    public Controller(ClienteServico clienteServico, AplicativoServico aplicativoServico,
+            AssinaturaServico assinaturaServico, PagamentoServico pagamentoServico, CriaAssinaturaUC criaAssinaturaUC,
+            ListaPorTipoUC listaPorTipoUC) {
+        this.clienteServico = clienteServico;
+        this.aplicativoServico = aplicativoServico;
+        this.assinaturaServico = assinaturaServico;
+        this.pagamentoServico = pagamentoServico;
+        this.criaAssinaturaUC = criaAssinaturaUC;
+        this.listaPorTipoUC = listaPorTipoUC;
+    }
+
     @GetMapping("")
     public String welcomeMessage() {
         return ("Bem vindo ao Controle de Assinaturas");
@@ -47,9 +69,9 @@ public class Controller {
     }
 
     @PostMapping("/assinaturas")
-    public ResponseEntity<AssinaturaModel> criarAssinatura(@RequestParam Long codigoCliente,
+    public ResponseEntity<AssinaturaDTO> criarAssinatura(@RequestParam Long codigoCliente,
             @RequestParam Long codigoAplicativo) {
-        AssinaturaModel assinatura = assinaturaServico.criarAssinatura(codigoCliente, codigoAplicativo);
+        AssinaturaDTO assinatura = criaAssinaturaUC.run(codigoCliente, codigoAplicativo);
         return ResponseEntity.ok(assinatura);
     }
 
@@ -60,12 +82,10 @@ public class Controller {
         return ResponseEntity.ok(aplicativo);
     }
 
-    /*
-     * @GetMapping("/assinaturas/{tipo}")
-     * public List<AssinaturaModel> listarAssinaturas(@PathVariable String tipo) {
-     * return assinaturaServico.listarAssinaturasPorTipo(tipo);
-     * }
-     */
+    @GetMapping("/assinaturas/{tipo}")
+    public ResponseEntity<List<AssinaturaDTO>> listarAssinaturasPorTipo(@PathVariable String tipo) {
+        return ResponseEntity.ok(listaPorTipoUC.run(tipo));
+    }
 
     @GetMapping("/clientes/{codcli}/assinaturas")
     public List<AssinaturaModel> listarAssinaturasCliente(@PathVariable Long codcli) {
@@ -80,7 +100,7 @@ public class Controller {
     @PostMapping("/registrarpagamento")
     public ResponseEntity<String> registrarPagamento(@RequestParam Long codass, @RequestParam Double valorPago,
             @RequestParam int dia, @RequestParam int mes, @RequestParam int ano) {
-        return pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano);
+        return ResponseEntity.ok(pagamentoServico.registrarPagamento(codass, valorPago, dia, mes, ano));
     }
 
     @GetMapping("/assinvalida/{codass}")

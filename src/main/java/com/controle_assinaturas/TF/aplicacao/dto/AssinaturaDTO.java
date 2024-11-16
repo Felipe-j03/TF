@@ -5,18 +5,18 @@ import java.time.LocalDate;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 
 public class AssinaturaDTO {
-    private Long codigo;
-    private AplicativoDTO aplicativo;
-    private ClienteDTO cliente;
+    private long codigo;
+    private Long aplicativoId;
+    private Long clienteId;
     private LocalDate inicioVigencia;
     private LocalDate fimVigencia;
-    private String status;
+    private String status; 
 
-    public AssinaturaDTO(Long codigo, AplicativoDTO aplicativo, ClienteDTO cliente, LocalDate inicioVigencia,
+    public AssinaturaDTO(long codigo, Long aplicativoId, Long clienteId, LocalDate inicioVigencia,
             LocalDate fimVigencia, String status) {
         this.codigo = codigo;
-        this.aplicativo = aplicativo;
-        this.cliente = cliente;
+        this.aplicativoId = aplicativoId;
+        this.clienteId = clienteId;
         this.inicioVigencia = inicioVigencia;
         this.fimVigencia = fimVigencia;
         this.status = status;
@@ -30,20 +30,20 @@ public class AssinaturaDTO {
         this.codigo = codigo;
     }
 
-    public AplicativoDTO getAplicativo() {
-        return aplicativo;
+    public Long getAplicativo() {
+        return aplicativoId;
     }
 
-    public void setAplicativo(AplicativoDTO aplicativo) {
-        this.aplicativo = aplicativo;
+    public void setAplicativo(Long aplicativoId) {
+        this.aplicativoId = aplicativoId;
     }
 
-    public ClienteDTO getCliente() {
-        return cliente;
+    public Long getCliente() {
+        return clienteId;
     }
 
-    public void setCliente(ClienteDTO cliente) {
-        this.cliente = cliente;
+    public void setCliente(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
     public LocalDate getInicioVigencia() {
@@ -70,10 +70,19 @@ public class AssinaturaDTO {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "AssinaturaDTO [codigo=" + codigo + ", aplicativo=" + aplicativo + ", cliente=" + cliente
-                + ", inicioVigencia=" + inicioVigencia + ", fimVigencia=" + fimVigencia + ", status=" + status + "]";
+    public static AssinaturaDTO fromModel(AssinaturaModel assinatura) {
+        return new AssinaturaDTO(assinatura.getCodigo(),
+                assinatura.getAplicativo().getCodigo(),
+                assinatura.getCliente().getCodigo(),
+                assinatura.getInicioVigencia(),
+                assinatura.getFimVigencia(),
+                assinatura.getFimVigencia().isAfter(LocalDate.now()) ? "ATIVA" : "CANCELADA"); // Atribuindo status
+                                                                                               // corretamente aqui
     }
 
+    @Override
+    public String toString() {
+        return "AssinaturaDTO [codigo=" + codigo + ", aplicativoId=" + aplicativoId + ", clienteId=" + clienteId
+                + ", inicioVigencia=" + inicioVigencia + ", fimVigencia=" + fimVigencia + ", status=" + status + "]";
+    }
 }
