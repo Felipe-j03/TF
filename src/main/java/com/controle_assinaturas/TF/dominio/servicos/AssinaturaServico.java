@@ -2,6 +2,7 @@ package com.controle_assinaturas.TF.dominio.servicos;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,7 @@ public class AssinaturaServico {
 
     public AssinaturaModel criarAssinatura(Long codigoCliente, Long codigoAplicativo) {
 
-        int i = 1;
-        long id = i;
+        Long id = new Random().nextLong();
 
         ClienteModel cliente = clienteServico.procuraPorCod(codigoCliente);
         AplicativoModel aplicativo = aplicativoServico.consultaPorCod(codigoAplicativo);
@@ -48,7 +48,6 @@ public class AssinaturaServico {
         AssinaturaModel assinatura = new AssinaturaModel(id, aplicativo, cliente, LocalDate.now(),
                 LocalDate.now().plusDays(7));
         assinaturaRepositorio.salvar(assinatura);
-        i++;
 
         return assinatura;
     }
@@ -64,11 +63,9 @@ public class AssinaturaServico {
     public List<AssinaturaModel> listarAssinantesPorAplicativo(Long codigoAplicativo) {
         return assinaturaRepositorio.listarAssinantesPorAplicativo(codigoAplicativo);
     }
-    
-    public void salvar(AssinaturaModel assinatura){
+
+    public void salvar(AssinaturaModel assinatura) {
         assinaturaRepositorio.salvar(assinatura);
     }
-    
-    
 
 }

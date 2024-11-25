@@ -3,6 +3,7 @@ package com.controle_assinaturas.TF.dominio.servicos;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.controle_assinaturas.TF.dominio.entidades.AplicativoModel;
 import com.controle_assinaturas.TF.dominio.entidades.AssinaturaModel;
 import com.controle_assinaturas.TF.dominio.entidades.PagamentoModel;
 import com.controle_assinaturas.TF.dominio.repositorios.IPagamentoRepositorio;
+import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Assinatura;
 import com.controle_assinaturas.TF.interfaceAdaptadora.repositorios.entidades.Pagamento;
 
 @Service
@@ -67,13 +69,31 @@ public class PagamentoServico {
         return "PAGAMENTO_OK - " + data + " - " + valorEstornado;
     }
 
-    /**
-     * Obtém o histórico de pagamentos de uma assinatura.
-     *
-     * @param assinaturaId ID da assinatura para obter o histórico.
-     * @return Lista de pagamentos feitos para a assinatura.
-     */
     public List<PagamentoModel> obterHistoricoPagamentos(Long assinaturaId) {
         return pagamentoRepositorio.historicoPagamentoPorID(assinaturaId);
+    }
+
+    public void ajustarPromocao(AssinaturaModel assinatura, String promocao) {
+        if (promocao == null || promocao.isEmpty()) {
+            throw new IllegalArgumentException("Promoção inválida.");
+        }
+
+        switch (promocao) {
+            case "PAGUE_30_GANHE_45":
+                assinatura.setFimVigencia(assinatura.getFimVigencia().plusDays(15));
+                break;
+            case "5_MENSAL":
+                Double custoAtual = assinatura.getAplicativo().getCustoMensal();
+                assinatura.getAplicativo().setCustoMensal(custoAtual * 0.95); // Desconto de 5%
+                break;
+            default:
+                throw new IllegalArgumentException("Promoção desconhecida: " + promocao);
+        }
+    }
+
+    public void aplicarPromocao(Long assinaturaID, String promocao) {
+        AssinaturaModel assinatura = assinaturaServico.consultaPorCodigo(assinaturaID);
+
+        ajustarPromocao(assinatura, promocao);
     }
 }
